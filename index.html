@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Major Paediatric Trauma Radiology Guidance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #0284c7; /* sky-600 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- New Flowchart Styles --- */
+        .flowchart-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            min-width: 600px; /* Ensure flowchart has enough space */
+        }
+        .fc-node {
+            border: 2px solid;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            position: relative;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            z-index: 1;
+            width: auto;
+            min-width: 220px;
+            max-width: 300px;
+        }
+        .fc-terminator { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        .fc-process { background-color: #e0f2fe; border-color: #38bdf8; color: #075985; }
+        .fc-decision { background-color: #fef9c3; border-color: #facc15; color: #854d0e; transform: rotate(45deg); width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 0; min-width: 180px; }
+        .fc-decision-text { transform: rotate(-45deg); font-weight: 600; }
+        .fc-info { background-color: #eef2ff; border-color: #818cf8; color: #3730a3; }
+        
+        .fc-connector {
+            width: 3px;
+            background-color: #6b7280;
+            position: relative;
+            height: 2.5rem;
+            margin-top: -0.5rem;
+            margin-bottom: -0.5rem;
+        }
+        .fc-connector::after { /* Arrowhead */
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 12px solid #6b7280;
+        }
+
+        .fc-branch {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            width: 100%;
+            position: relative;
+            padding-top: 2.5rem; /* Space for horizontal line */
+        }
+        .fc-branch::before { /* Horizontal line */
+            content: '';
+            position: absolute;
+            top: 1.25rem;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background-color: #6b7280;
+            z-index: 0;
+        }
+        .fc-branch.wide::before { left: 5%; right: 5%; }
+
+        .fc-branch-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            flex-basis: 0;
+            flex-grow: 1;
+            position: relative;
+        }
+        .fc-branch-path::before { /* Vertical line from horizontal bar */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 1.25rem;
+            background-color: #6b7280;
+        }
+        .fc-label {
+            position: absolute;
+            top: -0.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f1f5f9; /* Match tab content background */
+            padding: 0 0.5rem;
+            color: #4b5563;
+            font-weight: 600;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Header -->
+        <header class="bg-slate-800 text-white p-6 md:p-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl md:text-4xl font-bold">Major Paediatric Trauma Radiology</h1>
+                    <p class="text-md md:text-lg text-slate-300 mt-1">A Quick-Reference Infographic for UK Emergency Medicine</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-semibold text-lg">RCR</p>
+                    <p class="text-xs text-slate-400">Based on Oct 2024 Guidance</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-6 md:p-8">
+            <!-- Key Principles Section -->
+            <section id="key-principles">
+                <h2 class="text-2xl font-bold text-slate-700 mb-4 border-b-2 border-sky-500 pb-2">Core Principles</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-sky-50 p-4 rounded-lg flex items-start space-x-3">
+                        <svg class="h-6 w-6 text-sky-600 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <p><strong class="text-sky-800">Discuss & Tailor:</strong> Senior clinician & radiologist discussion is vital. Tailor imaging to the individual child.</p>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-lg flex items-start space-x-3">
+                        <svg class="h-6 w-6 text-amber-600 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        <p><strong class="text-amber-800">ALARP Principle:</strong> Increased radiation risk in children. Adhere strictly to 'As Low As Reasonably Practicable'.</p>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-lg flex items-start space-x-3">
+                        <svg class="h-6 w-6 text-emerald-600 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <p><strong class="text-emerald-800">CT is Not Mandatory:</strong> CT is helpful but should be used judiciously, not as a default for all trauma.</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg flex items-start space-x-3">
+                        <svg class="h-6 w-6 text-red-600 mt-1 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                        <p><strong class="text-red-800">Avoid FAST/Unenhanced US:</strong> These can provide false reassurance in blunt abdominal trauma.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabs for Trauma Types -->
+            <section id="trauma-algorithms" class="mt-8">
+                <div class="mb-4 border-b border-gray-200">
+                    <nav class="flex flex-wrap -mb-px" aria-label="Tabs" id="tab-buttons">
+                        <button data-tab="blunt" class="tab-button active text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Blunt Trauma</button>
+                        <button data-tab="penetrating" class="tab-button text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Penetrating Trauma</button>
+                        <button data-tab="blast" class="tab-button text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Blast Injury</button>
+                    </nav>
+                </div>
+                
+                <div id="tab-contents">
+                    <!-- Blunt Trauma Content -->
+                    <div id="blunt-content" class="tab-content active p-4 bg-slate-100 rounded-b-lg">
+                        <h3 class="text-xl font-bold text-slate-700 mb-4">CT Exclusion Tool for Blunt Polytrauma (&lt;16s)</h3>
+                        <p class="mb-6 text-gray-600">Consider NOT scanning an anatomical region if it satisfies ALL criteria below. Senior clinical discretion is paramount.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Head -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">1. Head</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>GCS > 13 (and not intubated)</li>
+                                    <li>Does NOT trigger NICE head injury guidelines for CT</li>
+                                </ul>
+                            </div>
+                            <!-- Neck -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">2. Neck</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>GCS > 13 (and not intubated)</li>
+                                    <li>Does NOT trigger NICE C-spine guidelines</li>
+                                </ul>
+                            </div>
+                            <!-- Chest -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">3. Chest</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Chest X-ray normal</li>
+                                    <li>Chest exam normal</li>
+                                    <li>NOT rapid deceleration (fall >6m or MVC >40mph)</li>
+                                </ul>
+                            </div>
+                            <!-- Abdomen -->
+                            <div class="bg-white p-4 rounded-lg shadow md:col-span-2 lg:col-span-1">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">4. Abdomen</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>No lap belt or handlebar injury</li>
+                                    <li>No abdominal wall ecchymosis</li>
+                                    <li>No abdominal tenderness (in conscious pt)</li>
+                                    <li>No abdominal distension</li>
+                                    <li>No persistent hypovolaemia (e.g. unexplained tachycardia)</li>
+                                    <li>No blood from urethra, rectum, or NGT</li>
+                                </ul>
+                            </div>
+                            <!-- Spine -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">5. Spine</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>No midline tenderness</li>
+                                    <li>Low concern on mechanism</li>
+                                    <li>No neurology (Consider MRI first line if signs present)</li>
+                                </ul>
+                            </div>
+                            <!-- Lower Threshold -->
+                            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg md:col-span-2 lg:col-span-3">
+                               <h4 class="font-bold">Lower Threshold to CT if:</h4>
+                               <ul class="list-disc list-inside mt-2">
+                                   <li>Patient needs emergency operation</li>
+                                   <li>Long secondary transfer required</li>
+                                   <li>Patient will be sedated in critical care for an extended period</li>
+                                   <li>Suspected Physical Abuse (SPA) - follow specific RCR guidance</li>
+                               </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Penetrating Trauma Content -->
+                    <div id="penetrating-content" class="tab-content bg-slate-100 rounded-b-lg">
+                        <h3 class="text-xl font-bold text-slate-700 mb-4 p-4">Imaging Algorithm for Penetrating Trauma</h3>
+                        <div class="flowchart-wrapper">
+                            <div class="flowchart">
+                                <div class="fc-node fc-terminator">Child with Penetrating Injury</div>
+                                <div class="fc-connector down"></div>
+                                <div class="fc-node fc-process">CXR if penetration to neck or torso (optional, clinician-led)</div>
+                                <div class="fc-connector down"></div>
+                                <div class="fc-branch wide">
+                                    <div class="fc-branch-path">
+                                        <div class="fc-node fc-process">Multiple Injuries</div>
+                                        <div class="fc-connector down"></div>
+                                        <div class="fc-branch">
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Torso</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">Contrast-enhanced CT: Chest, Abdomen, Pelvis</div>
+                                            </div>
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Non-Torso</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">Contrast-enhanced imaging as led by clinical findings</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fc-branch-path">
+                                        <div class="fc-node fc-process">Single-Site Injury</div>
+                                        <div class="fc-connector down"></div>
+                                        <div class="fc-branch wide">
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Head</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">Unenhanced +/- Contrast-enhanced CT</div>
+                                            </div>
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Neck</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">Contrast-enhanced CT (Consider CTA)</div>
+                                            </div>
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Torso</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">Contrast-enhanced CT (Region specific)</div>
+                                            </div>
+                                            <div class="fc-branch-path">
+                                                <div class="fc-node fc-process">Limb</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">CE imaging if vascular injury suspected</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fc-connector down"></div>
+                                <div class="fc-node fc-info">If coexisting blunt injuries, follow RCR paediatric blunt trauma guidelines</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blast Injury Content -->
+                    <div id="blast-content" class="tab-content bg-slate-100 rounded-b-lg">
+                         <h3 class="text-xl font-bold text-slate-700 mb-4 p-4">Imaging Algorithm for Blast Injuries</h3>
+                         <p class="px-4 -mt-4 mb-4 text-gray-600">Prioritised for mass casualty incidents. Avoid MRI in acute phase due to ferromagnetic shrapnel risk.</p>
+                         <div class="flowchart-wrapper">
+                            <div class="flowchart">
+                                <div class="fc-node fc-terminator">Child with Blast Injury</div>
+                                <div class="fc-connector down"></div>
+                                <div class="fc-node fc-decision"><div class="fc-decision-text">Haemodynamic Instability?</div></div>
+                                <div class="fc-branch">
+                                    <div class="fc-branch-path">
+                                        <div class="fc-label">Yes</div>
+                                        <div class="fc-node fc-process">X-rays (Chest, Abdo, +/- Limbs)</div>
+                                        <div class="fc-connector down"></div>
+                                        <div class="fc-node fc-info">Theatre</div>
+                                    </div>
+                                    <div class="fc-branch-path">
+                                        <div class="fc-label">No</div>
+                                        <div class="fc-node fc-decision"><div class="fc-decision-text">Multiple Areas of Concern?</div></div>
+                                        <div class="fc-branch">
+                                            <div class="fc-branch-path">
+                                                <div class="fc-label">No</div>
+                                                <div class="fc-node fc-process">CT areas of concern</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-info">+/- X-rays</div>
+                                            </div>
+                                            <div class="fc-branch-path">
+                                                <div class="fc-label">Yes</div>
+                                                <div class="fc-node fc-process">Whole-body CT topogram (head to toe)</div>
+                                                <div class="fc-connector down"></div>
+                                                <div class="fc-node fc-decision"><div class="fc-decision-text">Shrapnel in upper or lower limbs?</div></div>
+                                                <div class="fc-branch">
+                                                    <div class="fc-branch-path">
+                                                        <div class="fc-label">No</div>
+                                                        <div class="fc-node fc-process">Head to pelvis CT</div>
+                                                        <div class="fc-connector down"></div>
+                                                        <div class="fc-node fc-info">+/- Limb X-rays</div>
+                                                    </div>
+                                                    <div class="fc-branch-path">
+                                                        <div class="fc-label">Yes</div>
+                                                        <div class="fc-node fc-process">Whole-body CT (head to toe)</div>
+                                                        <div class="fc-connector down"></div>
+                                                        <div class="fc-node fc-info">Angio-CT if vascular injury suspected</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const tabButtons = document.getElementById('tab-buttons');
+        const tabContents = document.getElementById('tab-contents');
+
+        tabButtons.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const tab = e.target.dataset.tab;
+
+                // Deactivate all buttons and content
+                for (const button of tabButtons.children) {
+                    button.classList.remove('active');
+                }
+                for (const content of tabContents.children) {
+                    content.classList.remove('active');
+                }
+
+                // Activate the clicked button and corresponding content
+                e.target.classList.add('active');
+                document.getElementById(`${tab}-content`).classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
