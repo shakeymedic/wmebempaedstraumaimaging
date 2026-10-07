@@ -15,7 +15,7 @@
         }
         .tab-button.active {
             background-color: #0284c7; /* sky-600 */
-            color: white;
+            color: white !important;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         .tab-content {
@@ -181,6 +181,7 @@
                         <button data-tab="blunt" class="tab-button active text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Blunt Trauma</button>
                         <button data-tab="penetrating" class="tab-button text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Penetrating Trauma</button>
                         <button data-tab="blast" class="tab-button text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">Blast Injury</button>
+                        <button data-tab="contrast" class="tab-button text-lg font-medium text-center text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 p-4">CT Contrast</button>
                     </nav>
                 </div>
                 
@@ -194,16 +195,16 @@
                             <div class="bg-white p-4 rounded-lg shadow">
                                 <h4 class="font-bold text-lg text-sky-700 mb-2">1. Head</h4>
                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
-                                    <li>GCS > 13 (and not intubated)</li>
-                                    <li>Does NOT trigger NICE head injury guidelines for CT</li>
+                                    <li>GCS not below 13, and not intubated</li>
+                                    <li>Does NOT trigger the NICE NG232 CT head criteria (under-16s algorithm)</li>
                                 </ul>
                             </div>
                             <!-- Neck -->
                             <div class="bg-white p-4 rounded-lg shadow">
                                 <h4 class="font-bold text-lg text-sky-700 mb-2">2. Neck</h4>
                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
-                                    <li>GCS > 13 (and not intubated)</li>
-                                    <li>Does NOT trigger NICE C-spine guidelines</li>
+                                    <li>GCS not below 13, and not intubated</li>
+                                    <li>Does NOT trigger the NICE NG232 cervical spine imaging criteria (under-16s algorithm)</li>
                                 </ul>
                             </div>
                             <!-- Chest -->
@@ -224,7 +225,7 @@
                                     <li>No abdominal tenderness (in conscious pt)</li>
                                     <li>No abdominal distension</li>
                                     <li>No persistent hypovolaemia (e.g. unexplained tachycardia)</li>
-                                    <li>No blood from urethra, rectum, or NGT</li>
+                                    <li>No blood from the rectum or nasogastric tube (RCR section 4.2.20 also lists blood from the urethra)</li>
                                 </ul>
                             </div>
                             <!-- Spine -->
@@ -233,18 +234,85 @@
                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
                                     <li>No midline tenderness</li>
                                     <li>Low concern on mechanism</li>
-                                    <li>No neurology (Consider MRI first line if signs present)</li>
+                                    <li>No neurology</li>
+                                    <li class="list-none -ml-1 text-sm text-gray-600">MRI should be first line where possible (and is the primary modality with definite neurological signs).</li>
                                 </ul>
+                            </div>
+                            <!-- Limbs -->
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-lg text-sky-700 mb-2">6. Limbs</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>No complex fractures (consider)</li>
+                                    <li>No concern of vascular injury (consider)</li>
+                                </ul>
+                                <p class="mt-2 text-sm text-gray-600">Plain radiographs of the injured region are first line, usually AP and lateral including the adjacent joints.</p>
                             </div>
                             <!-- Lower Threshold -->
                             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg md:col-span-2 lg:col-span-3">
-                               <h4 class="font-bold">Lower Threshold to CT if:</h4>
+                               <h4 class="font-bold">Wider concerns that could lower the threshold to CT:</h4>
                                <ul class="list-disc list-inside mt-2">
-                                   <li>Patient needs emergency operation</li>
+                                   <li>Patient needs an emergency operation</li>
                                    <li>Long secondary transfer required</li>
                                    <li>Patient will be sedated in critical care for an extended period</li>
-                                   <li>Suspected Physical Abuse (SPA) - follow specific RCR guidance</li>
                                </ul>
+                            </div>
+                            <div class="bg-amber-50 border-l-4 border-amber-500 text-amber-900 p-4 rounded-r-lg md:col-span-2 lg:col-span-3">
+                               <h4 class="font-bold">Consider imaging to exclude injury when history or examination is compromised:</h4>
+                               <ul class="list-disc list-inside mt-2">
+                                   <li>Decreased level of consciousness, including intubated patients</li>
+                                   <li>Unwitnessed injury in the non-verbal child</li>
+                                   <li>Limited clinical observation, e.g. awaiting transfer or needing immediate surgery</li>
+                                   <li>Suspected physical abuse: follow the RCR guidance <em>The radiological investigation of suspected physical abuse in children</em></li>
+                               </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-700 mt-8 mb-4">Key points by region (RCR section 4.2)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Head and cervical spine</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Use the NICE NG232 under-16s algorithms for CT head and cervical spine imaging</li>
+                                    <li>3D CT reconstruction of the skull vault is highly recommended (better detection of linear fractures)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Thoracic and lumbar spine</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Plain radiographs of the injured region are generally the primary investigation</li>
+                                    <li>Targeted CT may be needed; the lumbar spine is included in CT abdomen and pelvis</li>
+                                    <li>Definite neurological signs: MRI where possible</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Chest</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Chest X-ray is the primary investigation</li>
+                                    <li>Consider contrast-enhanced CT with rapid deceleration (fall &gt;6 m or MVC &gt;40 mph), intoxication, reduced GCS or distracting painful injury</li>
+                                    <li>CT can be omitted if the chest film and examination are normal</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Abdomen</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Where indicated, contrast-enhanced CT abdomen and pelvis, single-volume dual-contrast</li>
+                                    <li>Hand injection of contrast is appropriate in very small children and babies</li>
+                                    <li>Isolated head injury: a reduced GCS alone should not justify abdominal CT</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Pelvis</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Pelvic fractures are rare; a screening pelvic X-ray is not indicated in all cases</li>
+                                    <li>A pelvic binder alone is not an indication for imaging without clinical assessment</li>
+                                    <li>If imaging after binder removal is needed, orthopaedics and the wider team should be present</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow">
+                                <h4 class="font-bold text-sky-700 mb-2">Delayed presentation</h4>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Consider contrast-enhanced imaging, given the limits of non-enhanced imaging</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -266,12 +334,12 @@
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Torso</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">Contrast-enhanced CT: Chest, Abdomen, Pelvis</div>
+                                                <div class="fc-node fc-info">Contrast-enhanced&dagger; CT: Chest, Abdomen, Pelvis</div>
                                             </div>
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Non-Torso</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">Contrast-enhanced imaging as led by clinical findings</div>
+                                                <div class="fc-node fc-info">Contrast-enhanced&dagger; imaging as led by clinical findings</div>
                                             </div>
                                         </div>
                                     </div>
@@ -282,22 +350,22 @@
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Head</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">Unenhanced +/- Contrast-enhanced CT</div>
+                                                <div class="fc-node fc-info">Unenhanced +/- contrast-enhanced&Dagger; CT</div>
                                             </div>
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Neck</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">Contrast-enhanced CT (Consider CTA)</div>
+                                                <div class="fc-node fc-info">Contrast-enhanced&Dagger; CT</div>
                                             </div>
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Torso</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">Contrast-enhanced CT (Region specific)</div>
+                                                <div class="fc-node fc-info">Contrast-enhanced&dagger; CT: chest only, chest and abdomen, or abdomen and pelvis&sect;</div>
                                             </div>
                                             <div class="fc-branch-path">
                                                 <div class="fc-node fc-process">Limb</div>
                                                 <div class="fc-connector down"></div>
-                                                <div class="fc-node fc-info">CE imaging if vascular injury suspected</div>
+                                                <div class="fc-node fc-info">Contrast-enhanced&Dagger; imaging if vascular injury suspected</div>
                                             </div>
                                         </div>
                                     </div>
@@ -305,6 +373,13 @@
                                 <div class="fc-connector down"></div>
                                 <div class="fc-node fc-info">If coexisting blunt injuries, follow RCR paediatric blunt trauma guidelines</div>
                             </div>
+                        </div>
+                        <div class="px-4 pb-4 text-sm text-gray-700 space-y-1">
+                            <p>&dagger; Bastion or modified Bastion protocol is the standard for contrast administration (choice per local practice).</p>
+                            <p>&Dagger; Consider CT angiogram in place of Bastion or modified Bastion if arterial injury is suspected.</p>
+                            <p>&sect; Use wider coverage if the entry wound is at the junction of two body parts (e.g. base of neck and upper chest, or lower chest and upper abdomen), or the depth or track could cross between them.</p>
+                            <p>Clinical assessment can underestimate the extent, depth and number of injuries; in hypovolaemic patients assume a greater level of trauma. Senior emergency physician and radiologist discussion should precede CT. Ask: "Is there any part of the body that we do not need to image?"</p>
+                            <p>Dual-phase imaging may be needed for ongoing haemorrhage or intra-abdominal injury, but can be falsely reassuring because of vasoconstriction in children.</p>
                         </div>
                     </div>
 
@@ -344,7 +419,7 @@
                                                         <div class="fc-label">No</div>
                                                         <div class="fc-node fc-process">Head to pelvis CT</div>
                                                         <div class="fc-connector down"></div>
-                                                        <div class="fc-node fc-info">+/- Limb X-rays</div>
+                                                        <div class="fc-node fc-info">+/- Limb X-rays; angio-CT if vascular injury suspected</div>
                                                     </div>
                                                     <div class="fc-branch-path">
                                                         <div class="fc-label">Yes</div>
@@ -359,6 +434,40 @@
                                 </div>
                             </div>
                          </div>
+                         <div class="px-4 pb-4 text-sm text-gray-700 space-y-1">
+                            <p>X-rays: include areas with visible injuries (e.g. possible shrapnel entry points) to guide surgical exploration.</p>
+                            <p>Low threshold for wider CT coverage when injuries are suspected in multiple regions.</p>
+                            <p>CT: non-contrast for the head; split bolus for chest, abdomen, pelvis and limbs. Angio-CT is used to plan interventional radiology.</p>
+                         </div>
+                    </div>
+
+                    <!-- CT Contrast Content -->
+                    <div id="contrast-content" class="tab-content p-4 bg-slate-100 rounded-b-lg">
+                        <h3 class="text-xl font-bold text-slate-700 mb-2">Camp Bastion contrast calculator (RCR Appendix 2)</h3>
+                        <p class="mb-4 text-gray-600">Two-thirds of the volume at a slow rate, then one-third at about twice that rate, so injection lasts 70 seconds. Scan starts at 70 seconds. Single-phase acquisition with a dual-contrast model.</p>
+                        <div class="overflow-x-auto bg-white rounded-lg shadow">
+                            <table class="w-full text-left text-sm text-gray-700">
+                                <thead class="bg-slate-200 text-slate-700"><tr><th class="p-2">Weight</th><th class="p-2">Total contrast</th><th class="p-2">First (slow)</th><th class="p-2">Then (fast)</th></tr></thead>
+                                <tbody>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">10 kg</td><td class="p-2">20 ml</td><td class="p-2">14 ml at 0.3 ml/s</td><td class="p-2">6 ml at 0.6 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">20 kg</td><td class="p-2">40 ml</td><td class="p-2">26 ml at 0.5 ml/s</td><td class="p-2">14 ml at 1.0 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">30 kg</td><td class="p-2">60 ml</td><td class="p-2">40 ml at 0.7 ml/s</td><td class="p-2">20 ml at 1.6 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">40 kg</td><td class="p-2">80 ml</td><td class="p-2">54 ml at 0.9 ml/s</td><td class="p-2">26 ml at 2.1 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">50 kg</td><td class="p-2">100 ml</td><td class="p-2">66 ml at 1.2 ml/s</td><td class="p-2">34 ml at 2.4 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">60 kg</td><td class="p-2">120 ml</td><td class="p-2">80 ml at 1.4 ml/s</td><td class="p-2">40 ml at 2.8 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">70 kg</td><td class="p-2">140 ml</td><td class="p-2">94 ml at 1.6 ml/s</td><td class="p-2">46 ml at 3.3 ml/s</td></tr>
+                                    <tr class="border-t border-slate-200"><td class="p-2 font-semibold">75 kg</td><td class="p-2">150 ml</td><td class="p-2">100 ml at 1.6 ml/s</td><td class="p-2">50 ml at 3.5 ml/s</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="mt-3 text-sm text-gray-600">Values as printed in the RCR wheel. Note the RCR text example for 10 kg (6 ml at 0.5 ml/s, then 14 ml at 1 ml/s) differs from the wheel. Check against your local radiology protocol before use.</p>
+                        <h4 class="font-bold text-slate-700 mt-6 mb-2">CT dose optimisation</h4>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700">
+                            <li>Set mA, kVp and pitch by weight or age</li>
+                            <li>Accept a level of noise appropriate for trauma scanning</li>
+                            <li>Use iterative reconstruction, tube current or organ-based modulation where available</li>
+                            <li>Use protocols that reduce dose to radiosensitive areas such as the lens</li>
+                        </ul>
                     </div>
                 </div>
             </section>
